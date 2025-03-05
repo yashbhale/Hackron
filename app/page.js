@@ -53,7 +53,7 @@ export default function Home() {
         </div>
         
         <div className="mt-10 sm:mt-0 sm:ml-10 animate-slide-up">
-          <img src='/delivery-boy.png' alt="Predict Location" width={500} height={500} className="" />
+          {/* <img src='/delivery-boy.png' alt="Predict Location" width={500} height={500} className="" /> */}
         </div>
       </div>
 
