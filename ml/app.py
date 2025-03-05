@@ -13,7 +13,7 @@ from folium.plugins import HeatMap
 app = Flask(__name__)
 
 # Load Customer Data (global copy)
-df = pd.read_csv(r'C:\Users\yashv\OneDrive\Documents\Desktop\Hackron\ml\Customer_data.csv')
+df = pd.read_csv('Customer_data.csv')
 df['order_count'] = df['order_count'].fillna(0) + 1  # Fill NaN with 0, then add 1
 df.dropna(subset=['Delivery_location_latitude', 'Delivery_location_longitude'], inplace=True)
 
