@@ -35,6 +35,7 @@ def get_clusters():
             silhouette_scores.append(silhouette_score(customer_locations, labels))
         optimal_k = K_range[np.argmax(silhouette_scores)]
 
+
         # Apply Clustering
         kmeans = KMeans(n_clusters=optimal_k, random_state=42, n_init=10)
         df_cluster['cluster'] = kmeans.fit_predict(customer_locations, sample_weight=customer_weights)
@@ -60,12 +61,13 @@ def get_map():
 
         # Determine optimal k using silhouette scores
         K_range = range(2, 11)
-        silhouette_scores = []
-        for k in K_range:
-            kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
-            labels = kmeans.fit_predict(customer_locations, sample_weight=customer_weights)
-            silhouette_scores.append(silhouette_score(customer_locations, labels))
-        optimal_k = K_range[np.argmax(silhouette_scores)]
+        # silhouette_scores = []
+        # for k in K_range:
+        #     kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
+        #     labels = kmeans.fit_predict(customer_locations, sample_weight=customer_weights)
+        #     silhouette_scores.append(silhouette_score(customer_locations, labels))
+        # optimal_k = K_range[np.argmax(silhouette_scores)]
+        optimal_k=11
 
         # Apply KMeans clustering to compute dark store locations
         kmeans = KMeans(n_clusters=optimal_k, random_state=42, n_init=10)
@@ -96,16 +98,6 @@ def get_map():
             for (lat, lon), weight in zip(customer_locations, customer_weights)
         ]
         HeatMap(heat_data, radius=12, blur=8, max_zoom=15).add_to(m)
-# # @app.route('/api/map', methods=['GET'])
-# # def get_map():
-# #     try:
-# #         # Create Map
-# #         city_center = [df['Delivery_location_latitude'].mean(), df['Delivery_location_longitude'].mean()]
-# #         m = folium.Map(location=city_center, zoom_start=12)
-
-# #         # HeatMap
-# #         heat_data = [[lat, lon, weight] for (lat, lon), weight in zip(df[['Delivery_location_latitude', 'Delivery_location_longitude']].values, df['order_count'].values)]
-# #         HeatMap(heat_data, radius=12, blur=8, max_zoom=15).add_to(m)
 
         # Plot Voronoi Regions
         for polygon in voronoi_polygons:
@@ -143,31 +135,7 @@ def get_map():
 
     except Exception as e:
         return jsonify({"error": str(e)}), 500
-# #         # Cluster Boundaries with Convex Hull
-# #         optimal_k = df['cluster'].nunique()
-# #         for cluster in range(optimal_k):
-# #             cluster_points = df[df['cluster'] == cluster][['Delivery_location_latitude', 'Delivery_location_longitude']].values
-# #             if len(cluster_points) > 2:
-# #                 hull = ConvexHull(cluster_points)
-# #                 hull_points = [cluster_points[i] for i in hull.vertices] + [cluster_points[hull.vertices[0]]]
-# #                 hull_line = LineString(hull_points)
-# #                 folium.PolyLine(
-# #                     locations=[(p[0], p[1]) for p in hull_line.coords],
-# #                     color='black', dash_array='5,5', weight=2
-# #                 ).add_to(m)
-
-# #         # Cluster Markers
-# #         for cluster in df['cluster'].unique():
-# #             cluster_points = df[df['cluster'] == cluster][['Delivery_location_latitude', 'Delivery_location_longitude']].values
-# #             for loc in cluster_points:
-# #                 folium.Marker(location=[loc[0], loc[1]], icon=folium.Icon(color='blue')).add_to(m)
-
-# #         map_html = m._repr_html_()
-# #         return map_html
-
-# #     except Exception as e:
-# #         return jsonify({"error": str(e)}), 500
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True)  
