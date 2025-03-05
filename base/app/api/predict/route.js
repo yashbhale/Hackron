@@ -42,7 +42,7 @@ export async function POST(req) {
     const { lat, lon } = cityResponse.data[0];
 
     // Fetch cluster data from Flask API
-    const clusterResponse = await axios.get("http://127.0.0.1:5000/api/cluster");
+    const clusterResponse = await axios.get("https://hackron-2.onrender.com/api/cluster");
     const clusterCenters = clusterResponse.data.cluster_centers;
 
     // Get area names for cluster points
@@ -50,12 +50,8 @@ export async function POST(req) {
       const areaName = await getAreaName(coords[0], coords[1]);
       return {
         id: index + 5, // IDs start after demo data
-        rentalcost: Array.from({ length: 3 }, () => 
-          Math.floor(Math.random() * (2 - 1 + 1)) + 100000
-        ),
-        travelingcost:Array.from({ length: 3 }, () => 
-          Math.floor(Math.random() * (2 - 1 + 1)) + 100000
-        ),
+        rentalcost: 150000,
+        travelingcost:10000,
         latitude: coords[0],
         longitude: coords[1],
         name: areaName,
