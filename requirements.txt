@@ -1,4 +1,6 @@
 flask
+gunicorn
+python-dotenv
 pandas==2.2.2
 numpy==1.26.4
 folium==0.19.5
@@ -7,3 +9,7 @@ matplotlib==3.8.4
 scikit-learn==1.5.1
 scipy==1.14.0
 shapely==2.0.6
+
+
+
+

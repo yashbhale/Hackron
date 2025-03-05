@@ -141,5 +141,6 @@ def get_map():
 
 if __name__ == '__main__':
     import os
-    port = int(os.environ.get("PORT", 5000))
+    port = int(os.environ["PORT"])  # Only use the PORT assigned by Render
     app.run(host="0.0.0.0", port=port, debug=True)
+

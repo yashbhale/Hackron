@@ -3,9 +3,6 @@ services:
     name: City-Wide-DarkStore-Network
     env: python
     buildCommand: pip install -r requirements.txt
-    startCommand: python app.py
-    envVars:
-      - key: PORT
-        value: 5000
+    startCommand: gunicorn -w 4 -b 0.0.0.0:$PORT app:app  # Use gunicorn for production
     autoDeploy: true
     region: oregon
