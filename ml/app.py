@@ -13,7 +13,7 @@ from folium.plugins import HeatMap
 app = Flask(__name__)
 
 # Load Customer Data (global copy)
-df = pd.read_csv('Customer_data.csv')
+df = pd.read_csv(r'C:\Users\yashv\OneDrive\Documents\Desktop\Hackron\ml\Customer_data.csv')
 df['order_count'] = df['order_count'].fillna(0) + 1  # Fill NaN with 0, then add 1
 df.dropna(subset=['Delivery_location_latitude', 'Delivery_location_longitude'], inplace=True)
 
@@ -33,7 +33,10 @@ def get_clusters():
             kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
             labels = kmeans.fit_predict(customer_locations, sample_weight=customer_weights)
             silhouette_scores.append(silhouette_score(customer_locations, labels))
-        optimal_k = K_range[np.argmax(silhouette_scores)]
+        # optimal_k = K_range[np.argmax(silhouette_scores)]
+        optimal_k=11
+
+
 
         # Apply Clustering
         kmeans = KMeans(n_clusters=optimal_k, random_state=42, n_init=10)
@@ -60,12 +63,13 @@ def get_map():
 
         # Determine optimal k using silhouette scores
         K_range = range(2, 11)
-        silhouette_scores = []
-        for k in K_range:
-            kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
-            labels = kmeans.fit_predict(customer_locations, sample_weight=customer_weights)
-            silhouette_scores.append(silhouette_score(customer_locations, labels))
-        optimal_k = K_range[np.argmax(silhouette_scores)]
+        # silhouette_scores = []
+        # for k in K_range:
+        #     kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
+        #     labels = kmeans.fit_predict(customer_locations, sample_weight=customer_weights)
+        #     silhouette_scores.append(silhouette_score(customer_locations, labels))
+        # optimal_k = K_range[np.argmax(silhouette_scores)]
+        optimal_k=11
 
         # Apply KMeans clustering to compute dark store locations
         kmeans = KMeans(n_clusters=optimal_k, random_state=42, n_init=10)
@@ -99,7 +103,7 @@ def get_map():
 
         # Plot Voronoi Regions
         for polygon in voronoi_polygons:
-            geojson = gpd.GeoSeries([polygon]).__geo_interface__
+            geojson = gpd.GeoSeries([polygon])._geo_interface_
             folium.GeoJson(
                 geojson,
                 style_function=lambda x: {'fillColor': 'lightblue', 'color': 'blue', 'weight': 1}
@@ -135,5 +139,5 @@ def get_map():
         return jsonify({"error": str(e)}), 500
 
 
-if __name__ == '__main__':
-    app.run(debug=True)  
+if _name_ == '_main_':
+    app.run(debug=True)
