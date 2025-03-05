@@ -1,5 +1,5 @@
 import React from "react";
-import { FiMapPin, FiSearch, FiUser, FiMenu } from "react-icons/fi";
+import { MapPin, Search, User, Menu } from "lucide-react";
 
 const Navbar = () => {
   return (
@@ -14,7 +14,7 @@ const Navbar = () => {
             
             {/* Location Selector */}
             <div className="ml-6 flex items-center space-x-1 cursor-pointer hover:bg-green-700 px-3 py-2 rounded">
-              <FiMapPin className="h-5 w-5" />
+              <MapPin className="h-5 w-5" />
               <span className="text-sm font-medium">Pune</span>
               <span className="text-xs mt-0.5">▼</span>
             </div>
@@ -24,7 +24,7 @@ const Navbar = () => {
           <div className="flex-1 max-w-2xl mx-4">
             <div className="relative text-gray-600">
               <div className="flex items-center">
-                <FiSearch className="absolute left-3 h-5 w-5 text-gray-400" />
+                <Search className="absolute left-3 h-5 w-5 text-gray-400" />
                 <input
                   type="search"
                   placeholder="Search for regions..."
@@ -51,13 +51,13 @@ const Navbar = () => {
 
             {/* Login/Signup */}
             <button className="flex items-center space-x-1 hover:bg-green-700 px-3 py-2 rounded">
-              <FiUser className="h-5 w-5" />
-              <span className="text-sm font-medium">Login/Signup</span>
+              <User className="h-5 w-5" />
+              <span className="text-sm font-medium"></span>
             </button>
 
             {/* Mobile Menu Button */}
             <button className="md:hidden hover:bg-green-700 p-2 rounded">
-              <FiMenu className="h-6 w-6" />
+              <Menu className="h-6 w-6" />
             </button>
           </div>
         </div>
