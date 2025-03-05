@@ -37,6 +37,7 @@ def get_clusters():
         optimal_k=11
 
 
+
         # Apply Clustering
         kmeans = KMeans(n_clusters=optimal_k, random_state=42, n_init=10)
         df_cluster['cluster'] = kmeans.fit_predict(customer_locations, sample_weight=customer_weights)
