@@ -33,8 +33,9 @@ def get_clusters():
             kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
             labels = kmeans.fit_predict(customer_locations, sample_weight=customer_weights)
             silhouette_scores.append(silhouette_score(customer_locations, labels))
-            optimal_k = K_range[np.argmax(silhouette_scores)]
-            optimal_k = 11
+        # optimal_k = K_range[np.argmax(silhouette_scores)]
+        optimal_k=11
+
 
 
         # Apply Clustering
