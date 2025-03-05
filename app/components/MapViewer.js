@@ -2,7 +2,7 @@ const MapViewer = () => {
     return (
       <div style={{ width: "100%", height: "600px" }}>
         <iframe
-          src="http://localhost:5000/static/map.html"
+          src="https://hackron-2.onrender.com/static/map.html"
           width="100%"
           height="100%"
           style={{ border: "none" }}
