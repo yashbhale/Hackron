@@ -50,8 +50,12 @@ export async function POST(req) {
       const areaName = await getAreaName(coords[0], coords[1]);
       return {
         id: index + 5, // IDs start after demo data
-        rentalcost: "N/A",
-        travelingcost: "N/A",
+        rentalcost: Array.from({ length: 3 }, () => 
+          Math.floor(Math.random() * (2 - 1 + 1)) + 100000
+        ),
+        travelingcost:Array.from({ length: 3 }, () => 
+          Math.floor(Math.random() * (2 - 1 + 1)) + 100000
+        ),
         latitude: coords[0],
         longitude: coords[1],
         name: areaName,
