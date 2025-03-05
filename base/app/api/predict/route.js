@@ -1,8 +1,6 @@
-import { Insights } from "@mui/icons-material";
 import axios from "axios";
 import mongoose from "mongoose";
 
-// Connect to MongoDB only if not already connected
 if (!mongoose.connections[0].readyState) {
   mongoose.connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -12,7 +10,19 @@ if (!mongoose.connections[0].readyState) {
     .catch((err) => console.error("MongoDB connection error:", err));
 }
 
-// Fix API Route Export
+async function getAreaName(latitude, longitude) {
+  try {
+    const response = await axios.get("https://nominatim.openstreetmap.org/reverse", {
+      params: { lat: latitude, lon: longitude, format: "json" },
+    });
+
+    return response.data.display_name || "Unknown";
+  } catch (error) {
+    console.error("Reverse Geocoding Error:", error);
+    return "Unknown";
+  }
+}
+
 export async function POST(req) {
   try {
     const { city } = await req.json();
@@ -21,61 +31,43 @@ export async function POST(req) {
       return new Response(JSON.stringify({ error: "City name is required" }), { status: 400 });
     }
 
-    // Fetch latitude & longitude from OpenStreetMap Nominatim API
-    const response = await axios.get("https://nominatim.openstreetmap.org/search", {
+    const cityResponse = await axios.get("https://nominatim.openstreetmap.org/search", {
       params: { q: city, format: "json", limit: 1 },
     });
 
-    if (response.data.length === 0) {
+    if (cityResponse.data.length === 0) {
       return new Response(JSON.stringify({ error: "City not found" }), { status: 404 });
     }
 
-    const { lat, lon } = response.data[0];
+    const { lat, lon } = cityResponse.data[0];
+
+    // Fetch cluster data from Flask API
+    const clusterResponse = await axios.get("http://127.0.0.1:5000/api/cluster");
+    const clusterCenters = clusterResponse.data.cluster_centers;
+
+    // Get area names for cluster points
+    const clusterInsights = await Promise.all(clusterCenters.map(async (coords, index) => {
+      const areaName = await getAreaName(coords[0], coords[1]);
+      return {
+        id: index + 5, // IDs start after demo data
+        rentalcost: "N/A",
+        travelingcost: "N/A",
+        latitude: coords[0],
+        longitude: coords[1],
+        name: areaName,
+        size: "Cluster Point",
+      };
+    }));
 
     return new Response(JSON.stringify({
       city,
       insights: [
-        {
-          id:1,
-          rentalcost: "10000",
-          travelingcost: "10001",
-          latitude: parseFloat(lat),
-          longitude: parseFloat(lon),
-          name: "area A",
-          size:"Medium",
-        },
-        {
-          id:2, 
-          rentalcost: "10000",
-          travelingcost: "10001",
-          latitude: parseFloat(lat),
-          longitude: parseFloat(lon),
-          name: "area A",
-          size:"Medium",
-        },
-        {
-          id:3,
-          rentalcost: "10012",
-          travelingcost: "10021",
-          latitude: -1.34567,
-          longitude: 0.12345,
-          name: "area A",
-          size:"Medium",
-        },
-        {
-          id:4,
-          rentalcost: "10012",
-          travelingcost: "10021",
-          latitude: 1.34567,
-          longitude: 0.12345,
-          name: "area A",
-          size:"Medium",
-        },
+        ...clusterInsights, // Adding dynamic cluster locations
       ],
     }), { status: 200, headers: { "Content-Type": "application/json" } });
 
   } catch (error) {
-    console.error("Error fetching location:", error);
+    console.error("Error fetching data:", error);
     return new Response(JSON.stringify({ error: "Internal server error" }), { status: 500 });
   }
 }
