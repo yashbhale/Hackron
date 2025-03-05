@@ -45,7 +45,7 @@ export async function POST(req) {
           size:"Medium",
         },
         {
-          id:2,
+          id:2, 
           rentalcost: "10000",
           travelingcost: "10001",
           latitude: parseFloat(lat),
