@@ -8,7 +8,7 @@ export default function Home() {
     <div className="min-h-screen flex flex-col items-center justify-center bg-white">
       <div className="text-center max-w-2xl px-4">
         <h1 className="text-5xl font-bold text-gray-800 mb-6">
-          Dark Store Location Predictor
+          Dark Store Network Projector
         </h1>
         
         <p className="text-xl text-gray-600 mb-8">
