@@ -34,6 +34,8 @@ export default function Predict() {
 
       const data = await res.json();
       setResult(data);
+      localStorage.setItem("resultareas", JSON.stringify(data)); // Convert to JSON string
+      console.log(data,result," nnnnnnnnnnnnnnnnnnnnnn");
     } catch (error) {
       console.error("Error fetching location:", error);
     }
@@ -73,9 +75,9 @@ export default function Predict() {
             <ul className="mt-2 space-y-3">
               {result.insights?.map((insight, index) => (
                 <li key={index} className="bg-gray-600 p-3 rounded-lg flex justify-between items-center">
-                  <span className="text-white">{insight.area}</span>
+                  <span className="text-white">{insight.name}</span>
                   <button
-                    onClick={() => alert(`Fetching insights for ${insight.area}...`)}
+                    onClick={() => alert(`Fetching insights for ${insight.name}...`)}
                     className="px-4 py-2 bg-blue-500 hover:bg-blue-400 text-white text-sm font-medium rounded-lg"
                   >
                     View Insights

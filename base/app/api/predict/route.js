@@ -8,8 +8,8 @@ if (!mongoose.connections[0].readyState) {
     useNewUrlParser: true,
     useUnifiedTopology: true,
   })
-  .then(() => console.log("MongoDB connected"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+    .then(() => console.log("MongoDB connected"))
+    .catch((err) => console.error("MongoDB connection error:", err));
 }
 
 // Fix API Route Export
@@ -34,34 +34,38 @@ export async function POST(req) {
 
     return new Response(JSON.stringify({
       city,
-      insights:[
+      insights: [
         {
-          rentalcost:"10000",
-          travelingcost:"10001",
-          latitude:parseFloat(lat),
+          rentalcost: "10000",
+          travelingcost: "10001",
+          latitude: parseFloat(lat),
           longitude: parseFloat(lon),
-          area:"area A",
+          name: "area A",
+          size:"Medium",
         },
         {
-          rentalcost:"10000",
-          travelingcost:"10001",
-          latitude:parseFloat(lat),
+          rentalcost: "10000",
+          travelingcost: "10001",
+          latitude: parseFloat(lat),
           longitude: parseFloat(lon),
-          area:"area A",
+          name: "area A",
+          size:"Medium",
         },
         {
-          rentalcost:"10012",
-          travelingcost:"10021",
-          latitude:-1.34567,
+          rentalcost: "10012",
+          travelingcost: "10021",
+          latitude: -1.34567,
           longitude: 0.12345,
-          area:"area B",
+          name: "area A",
+          size:"Medium",
         },
         {
-          rentalcost:"10012",
-          travelingcost:"10021",
-          latitude:1.34567,
+          rentalcost: "10012",
+          travelingcost: "10021",
+          latitude: 1.34567,
           longitude: 0.12345,
-          area:"area B",
+          name: "area A",
+          size:"Medium",
         },
       ],
     }), { status: 200, headers: { "Content-Type": "application/json" } });
