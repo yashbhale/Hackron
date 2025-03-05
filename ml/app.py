@@ -33,7 +33,9 @@ def get_clusters():
             kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
             labels = kmeans.fit_predict(customer_locations, sample_weight=customer_weights)
             silhouette_scores.append(silhouette_score(customer_locations, labels))
-        optimal_k = K_range[np.argmax(silhouette_scores)]
+        # optimal_k = K_range[np.argmax(silhouette_scores)]
+        optimal_k=11
+
 
         # Apply Clustering
         kmeans = KMeans(n_clusters=optimal_k, random_state=42, n_init=10)
@@ -60,12 +62,13 @@ def get_map():
 
         # Determine optimal k using silhouette scores
         K_range = range(2, 11)
-        silhouette_scores = []
-        for k in K_range:
-            kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
-            labels = kmeans.fit_predict(customer_locations, sample_weight=customer_weights)
-            silhouette_scores.append(silhouette_score(customer_locations, labels))
-        optimal_k = K_range[np.argmax(silhouette_scores)]
+        # silhouette_scores = []
+        # for k in K_range:
+        #     kmeans = KMeans(n_clusters=k, random_state=42, n_init=10)
+        #     labels = kmeans.fit_predict(customer_locations, sample_weight=customer_weights)
+        #     silhouette_scores.append(silhouette_score(customer_locations, labels))
+        # optimal_k = K_range[np.argmax(silhouette_scores)]
+        optimal_k=11
 
         # Apply KMeans clustering to compute dark store locations
         kmeans = KMeans(n_clusters=optimal_k, random_state=42, n_init=10)
