@@ -13,7 +13,7 @@ from folium.plugins import HeatMap
 app = Flask(__name__)
 
 # Load Customer Data (global copy)
-df = pd.read_csv(r'C:\Users\yashv\OneDrive\Documents\Desktop\Hackron\ml\Customer_data.csv')
+df = pd.read_csv('Customer_data.csv')
 df['order_count'] = df['order_count'].fillna(0) + 1  # Fill NaN with 0, then add 1
 df.dropna(subset=['Delivery_location_latitude', 'Delivery_location_longitude'], inplace=True)
 
@@ -103,7 +103,7 @@ def get_map():
 
         # Plot Voronoi Regions
         for polygon in voronoi_polygons:
-            geojson = gpd.GeoSeries([polygon])._geo_interface_
+            geojson = gpd.GeoSeries([polygon]).__geo_interface__
             folium.GeoJson(
                 geojson,
                 style_function=lambda x: {'fillColor': 'lightblue', 'color': 'blue', 'weight': 1}
@@ -139,5 +139,5 @@ def get_map():
         return jsonify({"error": str(e)}), 500
 
 
-if _name_ == '_main_':
+if __name__ == '__main__':
     app.run(debug=True)
