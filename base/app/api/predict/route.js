@@ -1,3 +1,4 @@
+import { Insights } from "@mui/icons-material";
 import axios from "axios";
 import mongoose from "mongoose";
 
@@ -33,9 +34,36 @@ export async function POST(req) {
 
     return new Response(JSON.stringify({
       city,
-      latitude: parseFloat(lat),
-      longitude: parseFloat(lon),
-      best_locations: ["Area A", "Area B", "Area C"], // Replace with actual logic
+      insights:[
+        {
+          rentalcost:"10000",
+          travelingcost:"10001",
+          latitude:parseFloat(lat),
+          longitude: parseFloat(lon),
+          area:"area A",
+        },
+        {
+          rentalcost:"10000",
+          travelingcost:"10001",
+          latitude:parseFloat(lat),
+          longitude: parseFloat(lon),
+          area:"area A",
+        },
+        {
+          rentalcost:"10012",
+          travelingcost:"10021",
+          latitude:-1.34567,
+          longitude: 0.12345,
+          area:"area B",
+        },
+        {
+          rentalcost:"10012",
+          travelingcost:"10021",
+          latitude:1.34567,
+          longitude: 0.12345,
+          area:"area B",
+        },
+      ],
     }), { status: 200, headers: { "Content-Type": "application/json" } });
 
   } catch (error) {
