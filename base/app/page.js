@@ -31,10 +31,17 @@ export default function Home() {
 
           <Link href="/predict">
             <button className={`px-8 py-3 bg-blue-500 hover:bg-blue-600 text-white rounded-lg 
-              font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl`}>
-              📍 Predict Location
+              font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer`}>
+              📍 Predict Locations
             </button>
           </Link>
+
+          <Link href="/displayregions">
+              <button className={`px-8 py-3 ml-4 bg-green-500 hover:bg-green-600 text-white rounded-lg 
+                font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer`}>
+                📈 Expenditure
+              </button>
+            </Link>
 
           <div className="mt-12 flex gap-6 text-gray-600 animate-fade-in">
             <Link href="/about" className="hover:text-gray-900 transition font-medium">

@@ -9,7 +9,7 @@ const Navbar = () => {
           {/* Left Section */}
           <div className="flex items-center">
             <div className="flex-shrink-0 flex items-center">
-              <span className="text-2xl font-bold">blinkit</span>
+              <span className="text-2xl font-bold">8bit</span>
             </div>
             
             {/* Location Selector */}
