@@ -1,8 +1,11 @@
 "use client";
 import { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
+// import dynamic from "next/dynamic";
 import "leaflet/dist/leaflet.css";
 import Navbar from "../components/Navbar"; // Ensure this component exists
+import dynamic from "next/dynamic";
+
+const MapViewer = dynamic(() => import("../components/MapViewer"), { ssr: false });
 
 // Dynamic imports for Leaflet components (avoids SSR issues)
 const MapContainer = dynamic(() => import("react-leaflet").then((mod) => mod.MapContainer), { ssr: false });
@@ -97,7 +100,7 @@ export default function Predict() {
 
         {result?.insights?.length > 0 && leaflet && (
           <div className="flex-1 h-[500px] lg:h-auto rounded-lg overflow-hidden shadow-md">
-            <OptimizedMap insights={result.insights} leaflet={leaflet} />
+            <MapViewer />
           </div>
         )}
       </div>
