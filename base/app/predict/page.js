@@ -50,8 +50,8 @@ export default function Predict() {
       <br/>
       <br/>
       {showForm && (
-        <div className="p-8 bg-gray-100 shadow-md min-h-screen pt-[15%]">
-          <h1 className="text-4xl font-extrabold text-gray-900 text-center">
+        <div className="p-8 bg-white shadow-md min-h-screen pt-[15%]">
+          <h1 className="text-4xl font-bold text-gray-900 text-center">
             Predict Best Dark Store Location
           </h1>
           <div className="flex items-center gap-4 mt-6 max-w-2xl mx-auto">
@@ -75,7 +75,7 @@ export default function Predict() {
 
       <div className="flex-1 flex flex-col lg:flex-row gap-8 p-8">
         {result && (
-          <div className="w-full lg:w-1/3 bg-gray-100 p-6 rounded-lg shadow-md">
+          <div className="w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-md">
             <h2 className="text-2xl font-semibold text-gray-900 mb-4">Dark Store Locations: </h2>
             <p className="text-lg text-gray-700">City: <span className="font-bold">{result.city}</span></p>
             <h3 className="text-xl font-semibold text-gray-900 mt-4">Best Locations:</h3>
