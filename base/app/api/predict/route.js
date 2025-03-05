@@ -36,6 +36,7 @@ export async function POST(req) {
       city,
       insights: [
         {
+          id:1,
           rentalcost: "10000",
           travelingcost: "10001",
           latitude: parseFloat(lat),
@@ -44,6 +45,7 @@ export async function POST(req) {
           size:"Medium",
         },
         {
+          id:2,
           rentalcost: "10000",
           travelingcost: "10001",
           latitude: parseFloat(lat),
@@ -52,6 +54,7 @@ export async function POST(req) {
           size:"Medium",
         },
         {
+          id:3,
           rentalcost: "10012",
           travelingcost: "10021",
           latitude: -1.34567,
@@ -60,6 +63,7 @@ export async function POST(req) {
           size:"Medium",
         },
         {
+          id:4,
           rentalcost: "10012",
           travelingcost: "10021",
           latitude: 1.34567,

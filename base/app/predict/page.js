@@ -111,21 +111,28 @@ const OptimizedMap = ({ insights, leaflet }) => {
 
   return (
     <MapContainer
-      center={[insights[0]?.latitude || 19.076, insights[0]?.longitude || 72.8777]}
-      zoom={12}
-      className="h-full w-full"
-    >
-      <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-      
-      {/* Loop through insights and display markers */}
-      {insights.map((insight, index) => (
-        <Marker key={index} position={[insight.latitude, insight.longitude]} icon={customIcon}>
-          <Popup className="text-sm font-semibold">
-            {insight.area} <br />
-            {insight.latitude}, {insight.longitude}
-          </Popup>
-        </Marker>
-      ))}
-    </MapContainer>
+    center={[insights[0]?.latitude || 19.076, insights[0]?.longitude || 72.8777]}
+    zoom={12}
+    className="h-full w-full"
+  >
+    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+    
+    {/* Loop through insights and display markers */}
+    {insights.map((insight, index) => (
+      <Marker key={insight.id || index} position={[insight.latitude, insight.longitude]} icon={customIcon}>
+        <Popup className="text-sm font-semibold">
+          <div>
+            <h3 className="font-bold text-lg">{insight.name}</h3>
+            <p><strong>Area:</strong> {insight.area}</p>
+            <p><strong>Latitude:</strong> {insight.latitude}</p>
+            <p><strong>Longitude:</strong> {insight.longitude}</p>
+            <p><strong>Rental Cost:</strong> {insight.rentalcost}</p>
+            <p><strong>Travel Cost:</strong> {insight.travelingcost}</p>
+            <p><strong>Size:</strong> {insight.size}</p>
+          </div>
+        </Popup>
+      </Marker>
+    ))}
+  </MapContainer>  
   );
 };
