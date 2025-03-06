@@ -16,6 +16,15 @@ app = Flask(__name__)
 df = pd.read_csv('Customer_data.csv')
 df['order_count'] = df['order_count'].fillna(0) + 1  # Fill NaN with 0, then add 1
 df.dropna(subset=['Delivery_location_latitude', 'Delivery_location_longitude'], inplace=True)
+rental_df = pd.read_csv('rental_data.csv')
+
+def initialize_kmeans():
+    kmeans = KMeans(n_clusters=11, random_state=42, n_init=10)
+    kmeans.fit(df[['Delivery_location_latitude', 'Delivery_location_longitude']], sample_weight=df['order_count'])
+    return kmeans
+
+kmeans = initialize_kmeans()
+rental_df['cluster'] = kmeans.predict(rental_df[['Delivery_location_latitude', 'Delivery_location_longitude']])
 
 
 @app.route('/api/cluster', methods=['GET'])
@@ -139,8 +148,29 @@ def get_map():
         return jsonify({"error": str(e)}), 500
 
 
-if __name__ == '__main__':
-    import os
-    port = int(os.environ["PORT"])  # Only use the PORT assigned by Render
-    app.run(host="0.0.0.0", port=port, debug=True)
+@app.route('/api/expenditure', methods=['POST'])
+def get_expenditure():
+    try:
+        data = request.json
+        if 'latitude' not in data or 'longitude' not in data:
+            return jsonify({"error": "Missing latitude or longitude"}), 400
 
+        lat, lon = data['latitude'], data['longitude']
+        coordinate = np.array([[lat, lon]])
+        cluster = kmeans.predict(coordinate)[0]
+        cluster_data = rental_df[rental_df['cluster'] == cluster]
+
+        avg_expenditure = cluster_data['price'].mean() if not cluster_data.empty else 0
+
+        return jsonify({
+            "latitude": lat,
+            "longitude": lon,
+            "associated_cluster": int(cluster),
+            "avg_rental_expenditure": round(avg_expenditure, 2),
+            "message": "Average expenditure calculated successfully"
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+    
+if __name__ == '__main__':
+    app.run(debug=True)
