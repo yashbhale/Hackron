@@ -38,7 +38,13 @@ export default function Home() {
                 📈 Expenditure
               </button>
             </Link>
-
+            
+            <Link href="/existing">
+              <button className={`px-11 py-3 ml-0 mt-4 bg-green-500 hover:bg-green-600 text-white rounded-lg 
+                font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer`}>
+                📈 Add new store in existing infrastructure
+              </button>
+            </Link>
           <div className="mt-12 flex gap-6 text-gray-600 animate-fade-in">
             <Link href="/about" className="hover:text-gray-900 transition font-medium">
               How it works
