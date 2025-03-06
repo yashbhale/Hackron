@@ -1,44 +1,15 @@
 "use client";
-import { useState, useEffect } from "react";
-import dynamic from "next/dynamic";
-import "leaflet/dist/leaflet.css";
+import { useState } from "react";
 import Navbar from "../components/Navbar";
-
-// Dynamic imports for Leaflet components (avoids SSR issues)
-const MapViewer = dynamic(() => import("../components/MapViewer"), {
-  ssr: false,
-});
-const MapContainer = dynamic(
-  () => import("react-leaflet").then((mod) => mod.MapContainer),
-  { ssr: false }
-);
-const TileLayer = dynamic(
-  () => import("react-leaflet").then((mod) => mod.TileLayer),
-  { ssr: false }
-);
-const Marker = dynamic(
-  () => import("react-leaflet").then((mod) => mod.Marker),
-  { ssr: false }
-);
-const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), {
-  ssr: false,
-});
+import MapViewer1 from "../components/MapViewer1"; // Directly import the component
 
 export default function Predict() {
   const [city, setCity] = useState("");
   const [result, setResult] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [leaflet, setLeaflet] = useState(null);
   const [showForm, setShowForm] = useState(true);
 
-  // Load Leaflet dynamically
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      import("leaflet").then((L) => setLeaflet(L));
-    }
-  }, []);
-
-  // Fetch predictions
+  // Fetch predictions from your API
   const handlePredict = async () => {
     setLoading(true);
     try {
@@ -47,14 +18,13 @@ export default function Predict() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ city }),
       });
-      
       const data = await res.json();
       setResult(data);
       localStorage.setItem("resultareas", JSON.stringify(data));
       console.log(data);
       setShowForm(false); // Hide form after prediction
     } catch (error) {
-      console.error("Error fetching location:", error);
+      console.error("Error fetching prediction:", error);
     }
     setLoading(false);
   };
@@ -90,26 +60,36 @@ export default function Predict() {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col lg:flex-row gap-8 p-8">
-        {/* Left Panel - Scrollable */}
+        {/* Left Panel - Prediction Insights */}
         {result && (
           <div className="w-full lg:w-1/3 bg-white p-6 rounded-lg shadow-md max-h-[640px] overflow-y-auto">
-            <h2 className="text-2xl font-semibold text-gray-900 mb-4">Dark Store Locations:</h2>
+            <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+              Dark Store Locations:
+            </h2>
             <p className="text-lg text-gray-700">
               City: <span className="font-bold">{result.city}</span>
             </p>
-            <h3 className="text-xl font-semibold text-gray-900 mt-4">Best Locations:</h3>
+            <h3 className="text-xl font-semibold text-gray-900 mt-4">
+              Best Locations:
+            </h3>
             <ul className="mt-2 space-y-3">
               {result.insights?.map((insight, index) => (
-                <li 
-                  key={index} 
+                <li
+                  key={index}
                   className="bg-gray-200 p-3 rounded-lg flex justify-between items-center flex-nowrap gap-4"
                 >
                   <div className="flex items-center gap-2 w-full overflow-hidden">
-                    <span className="font-bold text-gray-700">{index + 1}.</span>
-                    <span className="text-gray-900 truncate">{insight.name}</span>
+                    <span className="font-bold text-gray-700">
+                      {index + 1}.
+                    </span>
+                    <span className="text-gray-900 truncate">
+                      {insight.name}
+                    </span>
                   </div>
                   <button
-                    onClick={() => window.location.href='/displayregions'}
+                    onClick={() =>
+                      (window.location.href = "/displayregions")
+                    }
                     className="w-36 px-4 py-2 bg-blue-500 hover:bg-blue-400 text-white text-sm font-medium rounded-lg"
                   >
                     View Insights
@@ -120,10 +100,10 @@ export default function Predict() {
           </div>
         )}
 
-        {/* Right Panel - Fixed Map */}
-        {result?.insights?.length > 0 && leaflet && (
-          <div className="flex-1 h-[500px] lg:h-auto rounded-lg overflow-hidden shadow-md">
-            <MapViewer />
+        {/* Right Panel - Map Viewer */}
+        {result?.insights?.length > 0 && (
+          <div className="flex-1 h-[600px] lg:h-auto rounded-lg overflow-hidden shadow-md">
+            <MapViewer1 />
           </div>
         )}
       </div>
