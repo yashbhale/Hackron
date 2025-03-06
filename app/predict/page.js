@@ -47,7 +47,6 @@ export default function Predict() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ city }),
       });
-      
       const data = await res.json();
       setResult(data);
       localStorage.setItem("resultareas", JSON.stringify(data));
