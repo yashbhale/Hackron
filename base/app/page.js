@@ -1,17 +1,14 @@
-
-
-
-
 "use client";
 
 import Link from 'next/link';
 import Navbar from './components/Navbar';
 import Image from 'next/image';
+import MapViewer1 from './components/MapViewer1';
 
 export default function Home() {
   const features = [
     { title: "AI-Powered Demand Forecasting", icon: "📈", description: "Uses machine learning to predict demand patterns and optimize inventory placement." },
-    { title: "Smart Geographical Analysis", icon: "🗺️", description: "Identifies high-demand zones and uses heatmaps for strategic location planning." },
+    { title: "Smart Geographical Analysis", icon: "🗺", description: "Identifies high-demand zones and uses heatmaps for strategic location planning." },
     { title: "Optimal Store Placement", icon: "📍", description: "Recommends the best locations to minimize logistics costs and maximize reach." },
     { title: "Interactive Data Visualization", icon: "📊", description: "Provides real-time analytics with maps and graphs for informed decision-making." },
     { title: "Dynamic Business Insights", icon: "💡", description: "Offers actionable recommendations and tracks key performance metrics." },
@@ -42,7 +39,13 @@ export default function Home() {
                 📈 Expenditure
               </button>
             </Link>
-
+            
+            <Link href="/existing">
+              <button className={`px-11 py-3 ml-0 mt-4 bg-green-500 hover:bg-green-600 text-white rounded-lg 
+                font-semibold text-lg transition-all duration-200 shadow-lg hover:shadow-xl cursor-pointer`}>
+                📈 Add new store in existing infrastructure
+              </button>
+            </Link>
           <div className="mt-12 flex gap-6 text-gray-600 animate-fade-in">
             <Link href="/about" className="hover:text-gray-900 transition font-medium">
               How it works
@@ -57,7 +60,7 @@ export default function Home() {
         </div>
         
         <div className="mt-10 sm:mt-0 sm:ml-10 animate-slide-up">
-          <img src='/delivery-boy.png' alt="Predict Location" width={500} height={500} className="" />
+          {/* <img src='/delivery-boy.png' alt="Predict Location" width={500} height={500} className="" /> */}
         </div>
       </div>
 

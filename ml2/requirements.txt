@@ -1,0 +1,8 @@
+pandas==2.2.2
+numpy==1.26.4
+folium==0.19.5
+geopandas==1.0.1
+matplotlib==3.8.4
+scikit-learn==1.5.1
+scipy==1.14.0
+shapely==2.0.6
