@@ -1,7 +1,6 @@
 import mongoose from "mongoose";
 
-const MONGO_URI =
-  "mongodb+srv://yashvivekbhale:Yash12345@cluster0.hbyhn.mongodb.net/?authMechanism=DEFAULT";
+const MONGO_URI =process.env.Mongo;
 
 // Ensure MongoDB connects properly
 if (mongoose.connection.readyState === 0) {
@@ -64,7 +63,7 @@ export async function POST(req) {
     // Fetch cluster data from Flask
     let clusterResponse;
     try {
-      clusterResponse = await fetch("https://hackron.onrender.com//api/cluster");
+      clusterResponse = await fetch("https://hackron-production.up.railway.app/api/cluster");
       if (!clusterResponse.ok)
         throw new Error(`Cluster API failed with status ${clusterResponse.status}`);
     } catch (err) {
@@ -90,7 +89,7 @@ export async function POST(req) {
 
         let avg_rental_expenditure = "N/A";
         try {
-          const rentResponse = await fetch("https://hackron.onrender.com//api/expenditure", {
+          const rentResponse = await fetch("https://hackron-production.up.railway.app/api/expenditure", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ latitude: coords[0], longitude: coords[1] }),
@@ -135,7 +134,7 @@ export async function POST(req) {
 export async function GET(req) {
   try {
     // Proxy the request to the Flask /map endpoint
-    const mapResponse = await fetch("https://hackron.onrender.com//map");
+    const mapResponse = await fetch("https://hackron-production.up.railway.app/map");
     if (!mapResponse.ok)
       throw new Error(`Map API failed with status ${mapResponse.status}`);
     const mapData = await mapResponse.json();
