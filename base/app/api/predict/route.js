@@ -64,7 +64,7 @@ export async function POST(req) {
     // Fetch cluster data from Flask
     let clusterResponse;
     try {
-      clusterResponse = await fetch("http://192.168.0.100:5000/api/cluster");
+      clusterResponse = await fetch("https://hackron.onrender.com//api/cluster");
       if (!clusterResponse.ok)
         throw new Error(`Cluster API failed with status ${clusterResponse.status}`);
     } catch (err) {
@@ -90,7 +90,7 @@ export async function POST(req) {
 
         let avg_rental_expenditure = "N/A";
         try {
-          const rentResponse = await fetch("http://192.168.0.100:5000/api/expenditure", {
+          const rentResponse = await fetch("https://hackron.onrender.com//api/expenditure", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ latitude: coords[0], longitude: coords[1] }),
@@ -135,7 +135,7 @@ export async function POST(req) {
 export async function GET(req) {
   try {
     // Proxy the request to the Flask /map endpoint
-    const mapResponse = await fetch("http://192.168.0.100:5000/map");
+    const mapResponse = await fetch("https://hackron.onrender.com//map");
     if (!mapResponse.ok)
       throw new Error(`Map API failed with status ${mapResponse.status}`);
     const mapData = await mapResponse.json();
