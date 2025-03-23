@@ -42,7 +42,7 @@ export async function POST(req) {
     const { lat, lon } = cityResponse.data[0];
 
     // Fetch cluster data from Flask API
-    const clusterResponse = await axios.get("https://hackron-production.up.railway.app/api/cluster");
+    const clusterResponse = await axios.get("http://127.0.0.1:5000/api/cluster");
     const clusterCenters = clusterResponse.data.cluster_centers;
 
     // Get area names for cluster points
